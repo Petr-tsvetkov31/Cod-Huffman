@@ -2,7 +2,7 @@
 """
 Модуль для эффиктивного кодирования символом методом Хаффмана
 """
-
+//TODO add some decorators (ex @property)
 
 class Node(object):
     """
