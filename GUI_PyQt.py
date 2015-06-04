@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
+"""
+GUI by PyQt4 for efficient coding Huffman method provided Core.py
+"""
 
 import sys
-
 from PyQt4 import QtGui, QtCore
-
 import Core
 
 
 class MainGuiWidget(QtGui.QWidget):
-    """Основное окно приложения"""
+    """
+    The main application window
+    """
 
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
@@ -16,15 +19,15 @@ class MainGuiWidget(QtGui.QWidget):
         self.setWindowTitle("Huffman's code")
         self.center()
 
-        inputLabel = QtGui.QLabel("Please, enter your text and push the button...", self)
-        inputLabel.setGeometry(10, 30, 350, 30)
+        inputLabel = QtGui.QLabel("Source string:\nPlease, enter your text and push the button...", self)
+        inputLabel.setGeometry(10, 40, 350, 80)
 
         global inputArea
         inputArea = QtGui.QTextEdit(self)
         inputArea.setGeometry(10, 100, 350, 200)
 
         outputLabel = QtGui.QLabel("Codes:", self)
-        outputLabel.setGeometry(460, 10, 330, 30)
+        outputLabel.setGeometry(460, 10, 330, 50)
 
         global outputArea
         outputArea = QtGui.QTextEdit(self)
@@ -35,21 +38,20 @@ class MainGuiWidget(QtGui.QWidget):
         enterButton.setGeometry(360, 155, 100, 100)
 
         clearButton = QtGui.QPushButton("Clear", self)
-        clearButton.setGeometry(10, 310, 80, 35)
+        clearButton.setGeometry(5, 310, 360, 35)
 
         exitButton = QtGui.QPushButton("Exit", self)
-        exitButton.setGeometry(10, 360, 80, 35)
+        exitButton.setGeometry(715, 360, 80, 35)
 
-        # exitButton.clicked.connect(QtCore.QCoreApplication.instance().quit)
         self.connect(exitButton, QtCore.SIGNAL("clicked()"), QtCore.QCoreApplication.instance().quit)
-
         self.connect(clearButton, QtCore.SIGNAL("clicked()"), inputArea, QtCore.SLOT("clear()"))
         self.connect(enterButton, QtCore.SIGNAL("clicked()"), self.encode)
 
     def closeEvent(self, event):
-
-        reply = QtGui.QMessageBox.question(self, 'Message',
-            "Are you sure to quit?", QtGui.QMessageBox.Yes |
+        """
+        Function that handles closeEvent
+        """
+        reply = QtGui.QMessageBox.question(self, 'Message', "Are you sure to quit?", QtGui.QMessageBox.Yes |
             QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
@@ -58,13 +60,17 @@ class MainGuiWidget(QtGui.QWidget):
             event.ignore()
 
     def center(self):
-        """Функция выравнивания окна по центру экрана"""
+        """
+        Function that centered window on the screen
+        """
         screen = QtGui.QDesktopWidget().screenGeometry()
         size = self.geometry()
         self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
 
     def encode(self):
-        """Обработка в соответсвии с алгоритмом Хаффмана (модуль Core.py)"""
+        """
+        Processing in accordance with Huffman algorithm (module Core.py)
+        """
         inpStr = inputArea.toPlainText()
         outStr = ""
         Code, HuffTree = Core.HuffCode(inpStr)

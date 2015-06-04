@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Модуль для эффиктивного кодирования символом методом Хаффмана
+Module for efficient coding Huffman method
 """
-//TODO add some decorators (ex @property)
 
 class Node(object):
     """
-    Класс, описывающий вершину дерева Хаффмана
+    Class that describes a tip of Huffman tree
     """
 
     def __init__(self, key, weight, leftChild=None, rightChild=None):
@@ -35,8 +34,8 @@ class Node(object):
 
     def setCode(self, code=''):
         """
-        Назначение кода Хаффмана каждой вершине
-        в соответствии с текущим деревомм
+        Appointment Huffman code for each top
+        according to the current tree
         """
         self.code = code
         if self.rightChild != None: self.rightChild.setCode(code + '0')
@@ -51,8 +50,8 @@ class Node(object):
 
     def getDictLeafCode(self):
         """
-        Метод получения кода для всех листьев всех потомков вершины (кода символа)
-        Формируется словарь: символ - код
+        The method of obtaining the code for all the leaves of all the descendants of the top
+        Formed the dictionary: symbol - code
         """
 
         def addDictLeafCode(self, tmpDict):
@@ -68,38 +67,38 @@ class Node(object):
 
 def HuffCode(inputStr):
     """
-    Функция получения кодов Хаффмана для всех символов,
-    встречающихся в исходной строке. Возвращает словарь кодов символов
-    и построенное дерево Хаффмана(корень)
+    Function receiving Huffman codes for all symbols ,
+    found in the source string. Returns a dictionary of character codes
+    and built Huffman tree(root)
     """
-    # Создание первичного списка вершин и определение алфавита
+    # Creation first list of tops and determination of the alphabet
     listNode = []
     alphabet = list(set(inputStr))
     if alphabet:
-        # Формирование словаря: 
-        # символ - кол-во вхождений символа в исходной строке
+        # Formation the dictionary:
+        # symbol - number of occurrences symbol in source string
         dicWeight = {tmp: 0 for tmp in alphabet}
         for tmp in inputStr:
             dicWeight[tmp] += 1
-        # Заполнение списка вершин элементами словаря
+        # Completing the list of tops the elements of the dictionary
         for key, value in dicWeight.items():
             listNode.append(Node(key, value))
-        # Построение дерева по определенным вершинам. Построение от листьев
-        # к вершине. На каждой итерации выбираются два элемента с наименьшим
-        # "весом", удаляются из словаря и добавляются в дерево. Создаается
-        # новый элемент - слияние удаленных и записывается в список
+        # Construction of tree on certain tops. Building from the leaves
+        # to the top. At each iteration, selects two smallest element by
+        # "weight" and removed from the dictionary and added to the tree. Сreates
+        # A new element - the merger of remote and recorded in the list
         while len(listNode) > 1:
-            # Список сортируется по "весу элементов"
+            # List sorted by "the weight of the elements"
             listNode.sort(key=lambda element: element.getWeight(), reverse=True)
             rch = listNode.pop()
             lch = listNode.pop()
             newNode = Node(lch.getKey() + rch.getKey(), lch.getWeight() + rch.getWeight(), lch, rch)
             listNode.append(newNode)
-        # Последний элемент - корень дерева (содержит весь алфавит)
+        # The final element - the root of the tree (containing the entire alphabet)
         root = listNode.pop()
-        # Построение дерева закончено. Формирование кодов
+        # Construction of a tree is over. Formation codes
         root.setCode()
-    # Если строка не содержит символов - пустое дерево
+    # If the string contains no characters - empty tree
     else:
         root = Node("", 0)
     dicCode = root.getDictLeafCode()
@@ -107,13 +106,15 @@ def HuffCode(inputStr):
 
 
 def HuffStr(inputStr):
-    """Кодирование исходной строки кодами Хаффмана"""
+    """
+    Encoding source string by Huffman code
+    """
     tmpCode, tmpHuffTree = HuffCode(inputStr)
     return ''.join([tmpCode[x] for x in inputStr])
 
 
 if __name__ == '__main__':
-    # Консольный тест модуля
+    # For test in console mode
     inputStr = str(input('please enter test:'))
     Code, HuffTree = HuffCode(inputStr)
     print(HuffTree.show())
