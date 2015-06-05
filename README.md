@@ -1,10 +1,10 @@
 # Cod-Huffman
 
-Программа преобразует строку символов в двоичный код методом Хаффмана
+The program converts the string in binary by Huffman method 
 
-### Работа с программой:
+### Working with program:
 
-1. Запустить файл GUI_PyQt.py
-2. Ввести строку данных в поле Source string
-3. Нажать кнопку Encode=>
-4. Любоваться результатом
+1. Run the file GUI_PyQt.py
+2. Enter a string of data in the field Source string
+3. Push button the Encode=>
+4. Enjoy the result
