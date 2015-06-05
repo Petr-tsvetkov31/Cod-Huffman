@@ -117,7 +117,7 @@ if __name__ == '__main__':
     # For test in console mode
     inputStr = str(input('please enter test:'))
     Code, HuffTree = HuffCode(inputStr)
-    print(HuffTree.show())
+    # print(HuffTree.show())
     print("{:|^19}".format(''))
     for key, value in Code.items():
         print("||{:<2} : {:<10}||".format(key, value))
